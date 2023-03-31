@@ -1,20 +1,20 @@
-import { INTEGER, Model, STRING } from 'sequelize';
+import { DataTypes, InferAttributes, Model } from 'sequelize';
 import db from '.';
 
-class Teams extends Model {
+class Teams extends Model<InferAttributes<Teams>> {
   declare id: number;
   declare teamName: string;
 }
 
 Teams.init({
   id: {
-    type: INTEGER,
+    type: DataTypes.NUMBER,
     allowNull: false,
     primaryKey: true,
     autoIncrement: true,
   },
   teamName: {
-    type: STRING(30),
+    type: DataTypes.STRING,
     allowNull: false,
   },
 }, {
