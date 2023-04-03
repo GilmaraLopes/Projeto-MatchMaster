@@ -10,5 +10,6 @@ const service = new TeamService(TeamModel);
 const controller = new TeamController(service);
 
 teamRoutes.get('/', controller.get.bind(controller));
+teamRoutes.get('/:id', controller.getById.bind(controller));
 
 export default teamRoutes;
