@@ -4,6 +4,7 @@ import UsersService from '../services/UsersService';
 import UsersController from '../controllers/UserController';
 import verifyRequiredFields from '../middlewares/verifyRequiredFields';
 import ValidationUser from '../middlewares/validationUser';
+import auth from '../auth/validateToken';
 
 const validation = new ValidationUser();
 
@@ -20,5 +21,7 @@ userRoutes.post(
   validation.validatePassword,
   controller.create.bind(controller),
 );
+
+userRoutes.get('/role', auth, controller.getUser.bind(controller));
 
 export default userRoutes;

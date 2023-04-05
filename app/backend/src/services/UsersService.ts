@@ -18,8 +18,8 @@ export default class UserService implements IUserService {
     if (!user || !verifyPassword(body.password, user.password)) {
       throw new ErrorGenerate('Invalid email or password', 401);
     }
-    const { email } = user;
-    const token = generateToken({ email });
+    const { email, role } = user;
+    const token = generateToken({ email, role });
     return token;
   }
 }

@@ -35,6 +35,7 @@ class App {
     this.app.use('/matches', matchesRoutes);
     this.app.use('/login', userRoutes);
     this.app.use(errorMiddleware);
+    this.app.use('/role', userRoutes);
   }
 
   public start(PORT: string | number):void {

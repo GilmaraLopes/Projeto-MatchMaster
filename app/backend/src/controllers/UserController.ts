@@ -14,4 +14,14 @@ export default class UserController {
       next(error);
     }
   }
+
+  getUser = (req:Request, res:Response, next:NextFunction) => {
+    try {
+      const { role } = req.body.user.payload;
+
+      return res.status(200).json({ role });
+    } catch (error) {
+      next(error);
+    }
+  };
 }
