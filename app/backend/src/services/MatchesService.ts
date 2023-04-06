@@ -17,4 +17,19 @@ export default class MatchesService implements IMatchesService {
       },
     ] });
   }
+
+  async getOne(statusMatch: string): Promise<IMatches[]> {
+    const inProgress = statusMatch === 'true' ? 1 : 0;
+    return this.matchesModel.findAll({
+      where: { inProgress },
+      include: [
+        {
+          model: Teams, as: 'homeTeam',
+        },
+        {
+          model: Teams, as: 'awayTeam',
+        },
+      ],
+    });
+  }
 }
