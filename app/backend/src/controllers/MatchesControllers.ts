@@ -22,4 +22,12 @@ export default class MatchesController implements IMatches {
 
     return res.status(200).json({ finished });
   }
+
+  async updateMatch(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+    const update = req.body;
+    const updated = await this.matchesService.updateMatch(update, id as unknown as number);
+
+    return res.status(200).json({ updated });
+  }
 }
