@@ -32,4 +32,9 @@ export default class MatchesService implements IMatchesService {
       ],
     });
   }
+
+  async updateMatchFinish(id: number): Promise<void> {
+    // const inProgress = statusMatch === 'true' ? 1 : 0;
+    await this.matchesModel.update({ inProgress: 0 }, { where: { id } });
+  }
 }

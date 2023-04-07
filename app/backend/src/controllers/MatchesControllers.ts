@@ -15,4 +15,11 @@ export default class MatchesController implements IMatches {
     const matches = await this.matchesService.getAllMatches();
     return res.status(200).json(matches);
   }
+
+  async updateMatchFinish(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+    const finished = await this.matchesService.updateMatchFinish(id as unknown as number);
+
+    return res.status(200).json({ finished });
+  }
 }
