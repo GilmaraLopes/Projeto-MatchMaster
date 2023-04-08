@@ -2,7 +2,7 @@ import { ModelStatic } from 'sequelize';
 import Teams from '../database/models/TeamsModel';
 import IMatches from '../database/models/interfaces/matchesModel';
 import Matches from '../database/models/MatchesModel';
-import IMatchesService, { IGoals } from './interfaces/matchesService';
+import IMatchesService, { ICreate, IGoals } from './interfaces/matchesService';
 
 export default class MatchesService implements IMatchesService {
   constructor(private matchesModel: ModelStatic<Matches>) { }
@@ -42,6 +42,10 @@ export default class MatchesService implements IMatchesService {
       homeTeamGoals: match.homeTeamGoals,
       awayTeamGoals: match.awayTeamGoals,
     }, { where: { id } });
-    console.log({ match });
+  }
+
+  async insertMatch(match: ICreate): Promise<IMatches> {
+    const result = await this.matchesModel.create({ ...match, inProgress: true });
+    return result;
   }
 }

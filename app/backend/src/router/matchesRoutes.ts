@@ -13,5 +13,6 @@ const controller = new MatchesController(service);
 matchesRoutes.get('/', controller.get.bind(controller));
 matchesRoutes.patch('/:id/finish', auth, controller.updateMatchFinish.bind(controller));
 matchesRoutes.patch('/:id', auth, controller.updateMatch.bind(controller));
+matchesRoutes.post('/', auth, controller.insertMatch.bind(controller));
 
 export default matchesRoutes;
