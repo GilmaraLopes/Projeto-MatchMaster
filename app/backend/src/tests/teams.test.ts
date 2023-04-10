@@ -1,5 +1,5 @@
 import * as sinon from 'sinon';
-import {Model} from "sequelize";
+import { Model } from "sequelize";
 import * as chai from 'chai';
 // @ts-ignore
 import chaiHttp = require('chai-http');
