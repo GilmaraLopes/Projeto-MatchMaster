@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import IMatches from './interfaces/matchesController';
 import IMatchesService from '../services/interfaces/matchesService';
 
@@ -31,10 +31,15 @@ export default class MatchesController implements IMatches {
     return res.status(200).json({ updated });
   }
 
-  async insertMatch(req: Request, res: Response): Promise<Response> {
-    const { homeTeamId, awayTeamId, homeTeamGoals, awayTeamGoals } = req.body;
-    const data = await this.matchesService.insertMatch({
-      homeTeamId, awayTeamId, homeTeamGoals, awayTeamGoals });
-    return res.status(201).json(data);
+  async insertMatch(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { homeTeamId, awayTeamId, homeTeamGoals, awayTeamGoals } = req.body;
+      const data = await this.matchesService.insertMatch({
+        homeTeamId, awayTeamId, homeTeamGoals, awayTeamGoals,
+      });
+      return res.status(201).json(data);
+    } catch (error) {
+      return next(error);
+    }
   }
 }

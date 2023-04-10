@@ -11,9 +11,9 @@ export default class UserService implements IUserService {
 
   async postUser(body: IUser): Promise<string> {
     const user = await this.userModel.findOne({ where: { email: body.email } });
-    if (!user) {
-      throw new ErrorGenerate('Invalid email or password', 401);
-    }
+    // if (!user) {
+    //   throw new ErrorGenerate('Invalid email or password', 401);
+    // }
 
     if (!user || !verifyPassword(body.password, user.password)) {
       throw new ErrorGenerate('Invalid email or password', 401);

@@ -3,6 +3,7 @@ import Teams from '../database/models/TeamsModel';
 import IMatches from '../database/models/interfaces/matchesModel';
 import Matches from '../database/models/MatchesModel';
 import IMatchesService, { ICreate, IGoals } from './interfaces/matchesService';
+import ErrorGenerate from '../helpers/errorGenerate';
 
 export default class MatchesService implements IMatchesService {
   constructor(private matchesModel: ModelStatic<Matches>) { }
@@ -45,6 +46,19 @@ export default class MatchesService implements IMatchesService {
   }
 
   async insertMatch(match: ICreate): Promise<IMatches> {
+    console.log(match.homeTeamId);
+    console.log(match.awayTeamId);
+
+    if (match.homeTeamId === match.awayTeamId) {
+      throw new ErrorGenerate('It is not possible to create a match with two equal teams', 422);
+    }
+    const homeTeam = await this.matchesModel.findByPk(match.homeTeamId);
+    const awayTeam = await this.matchesModel.findByPk(match.awayTeamId);
+    if (!homeTeam || !awayTeam) {
+      throw new ErrorGenerate('There is no team with such id!', 404);
+    }
+    console.log('teste!!!!!!!!!!!!!!!11');
+
     const result = await this.matchesModel.create({ ...match, inProgress: true });
     return result;
   }
