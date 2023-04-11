@@ -27,6 +27,24 @@ describe('Rota /matches', () => {
       expect(response.body).to.deep.equal(Matches);
     });
 
-  })
+    it('Deve retornar a lista de partidas in progress', async () => {
+      sinon.stub(MatchesModel, 'findAll').resolves(Matches as unknown as MatchesModel[]);
 
+      const response = await chai.request(app).get('/matches').set('inProgress', 'true');
+
+      expect(response.status).to.be.equal(200);
+      expect(response.body).to.deep.equal(Matches);
+    });
+
+    it('Deve retornar a lista de partidas finalizadas', async () => {
+      sinon.stub(MatchesModel, 'findAll').resolves(Matches as unknown as MatchesModel[]);
+
+      const response = await chai.request(app).get('/matches').set('inProgress', 'false');
+
+      expect(response.status).to.be.equal(200);
+      expect(response.body).to.deep.equal(Matches);
+    });
+
+  })
+  
 });

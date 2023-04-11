@@ -69,25 +69,29 @@ describe('Testes de campo de login', () => {
   })
 })
   
-  // it('deve retornar um status 200', async () => {
-  //   const user = {
-  //     email: 'admin@admin.com',
-  //     id: 1,
-  //     password: 'secret_admin',
-  //     role: 'admin',
-  //     username: 'Admin'
-  //   }
-  //   sinon.stub(Users, 'findByPk').resolves(user as Users)
+  it('deve retornar um status 200 se a requisição foi feita com sucesso', async () => {
+    // const user = {
+    //   email: 'admin@admin.com',
+    //   id: 1,
+    //   password: 'secret_admin',
+    //   role: 'admin',
+    //   username: 'Admin'
+    // }
+    // sinon.stub(Users, 'findByPk').resolves(null)
+    // sinon.stub(Model, 'create').resolves(user as Users)
 
-  //   const response = await chai.request(app).get('/login/1')
-
-  //   expect(response.status).to.be.equal(200);
-  //   expect(response.body).to.deep.equal({
-  //     email: 'admin@admin.com',
-  //     id: 1,
-  //     password: 'secret_admin',
-  //     role: 'admin',
-  //     username: 'Admin',
-  //   });
-  // });
+    const response = await chai.request(app).post('/login').send({
+      email: 'admin@admin.com',
+      password: 'secret_admin',
+})
+    expect(response).to.not.be.null;
+    const httpResponse = await chai
+      .request(app)
+      .get('/login/role')
+      .set('Authorization', response.body.token)
+    expect(httpResponse.status).to.be.equal(200);
+    expect(httpResponse.body).to.deep.equal({
+      role: 'admin' 
+    });
+  });
 });
