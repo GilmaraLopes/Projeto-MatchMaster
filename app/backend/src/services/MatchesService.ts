@@ -46,9 +46,6 @@ export default class MatchesService implements IMatchesService {
   }
 
   async insertMatch(match: ICreate): Promise<IMatches> {
-    console.log(match.homeTeamId);
-    console.log(match.awayTeamId);
-
     if (match.homeTeamId === match.awayTeamId) {
       throw new ErrorGenerate('It is not possible to create a match with two equal teams', 422);
     }
@@ -57,7 +54,6 @@ export default class MatchesService implements IMatchesService {
     if (!homeTeam || !awayTeam) {
       throw new ErrorGenerate('There is no team with such id!', 404);
     }
-    console.log('teste!!!!!!!!!!!!!!!11');
 
     const result = await this.matchesModel.create({ ...match, inProgress: true });
     return result;
