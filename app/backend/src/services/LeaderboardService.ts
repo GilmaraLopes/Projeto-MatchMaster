@@ -128,10 +128,23 @@ export default class LeaderboardService implements IGetLeader {
     return saldoDeGols;
   }
 
+  static compareTimes(TeamsSorted: ILeaderboard[]) {
+    return TeamsSorted.sort((teamA: ILeaderboard, teamB: ILeaderboard) => {
+      if (teamA.totalPoints !== teamB.totalPoints) {
+        return teamB.totalPoints - teamA.totalPoints;
+      } if (teamA.totalVictories !== teamB.totalVictories) {
+        return teamB.totalVictories - teamA.totalVictories;
+      } if (teamA.goalsBalance !== teamB.goalsBalance) {
+        return teamB.goalsBalance - teamA.goalsBalance;
+      }
+      return teamB.goalsFavor - teamA.goalsFavor;
+    });
+  }
+
   async getInfo(team: 'homeTeamId' | 'awayTeamId'): Promise<ILeaderboard[]> {
     const teams = await this.getTeam();
     const match = await this.getMatches();
-    const test = teams.map((t) => ({
+    const board = teams.map((t) => ({
       name: t.teamName,
       totalPoints: LeaderboardService.getTotalPoints(t.id, team, match) as number,
       totalGames: LeaderboardService.getTotalGames(t.id, team, match) as number,
@@ -144,6 +157,7 @@ export default class LeaderboardService implements IGetLeader {
       efficiency: LeaderboardService
         .getAproveitamentoTime(t.id, team, match).toFixed(2) as unknown as number,
     }));
-    return test;
+    const result = LeaderboardService.compareTimes(board);
+    return result;
   }
 }

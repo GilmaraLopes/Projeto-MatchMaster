@@ -10,5 +10,6 @@ const controller = new LeaderboardController(service);
 
 leaderboardRoutes.get('/home', controller.getInfoHome.bind(controller));
 leaderboardRoutes.get('/away', controller.getInfoAway.bind(controller));
+// leaderboardRoutes.get('/', controller.getInfoBoard.bind(controller));
 
 export default leaderboardRoutes;
