@@ -15,6 +15,8 @@ chai.use(chaiHttp);
 const { expect } = chai;
 
 describe('Rota /matches', () => {
+
+  // let Response: Response;
   afterEach(sinon.restore);
 
   describe('GET matches', () => {
@@ -44,6 +46,14 @@ describe('Rota /matches', () => {
       expect(response.status).to.be.equal(200);
       expect(response.body).to.deep.equal(Matches);
     });
+
+    // it('Testa se é possível finalizar uma partida no banco de dados', async () => {
+    //   sinon.stub(MatchesModel, 'update').resolves();
+      
+    //   Response = await chai.request(app).patch('/1/finish');
+    //   expect(Response.status).to.be.equal(404);
+    //   expect(Response.body).to.be.deep.equal({message: 'Finished'});
+    // });
 
   })
   
