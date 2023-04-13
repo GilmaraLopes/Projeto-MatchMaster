@@ -3,6 +3,10 @@ import Teams from '../database/models/TeamsModel';
 import Matches from '../database/models/MatchesModel';
 import IGetLeader, { ILeaderboard } from './interfaces/leaderboardModel';
 
+export interface IObj {
+  home: ILeaderboard[],
+  away: ILeaderboard[],
+}
 export default class LeaderboardService implements IGetLeader {
   private teamsModel: ModelStatic<Teams> = Teams;
   private matchesModel: ModelStatic<Matches> = Matches;
@@ -158,6 +162,35 @@ export default class LeaderboardService implements IGetLeader {
         .getAproveitamentoTime(t.id, team, match).toFixed(2) as unknown as number,
     }));
     const result = LeaderboardService.compareTimes(board);
+    return result;
+  }
+
+  async generateAllInfo({ home, away }: IObj): Promise<ILeaderboard[]> {
+    this.generateAllInfo = this.generateAllInfo.bind(this);
+    return home.map((mh): ILeaderboard => {
+      const awayTeamInfo = away.find((ma) => mh.name === ma.name) as unknown as ILeaderboard;
+      const totalPoints = (mh.totalPoints + awayTeamInfo.totalPoints);
+      const totalGames = mh.totalGames + awayTeamInfo.totalGames;
+      const efficiency = Number(((totalPoints / (totalGames * 3)) * 100).toFixed(2));
+      return { name: mh.name,
+        totalPoints,
+        totalGames,
+        totalVictories: mh.totalVictories + awayTeamInfo.totalVictories,
+        totalDraws: mh.totalDraws + awayTeamInfo.totalDraws,
+        totalLosses: mh.totalLosses + awayTeamInfo.totalLosses,
+        goalsFavor: mh.goalsFavor + awayTeamInfo.goalsFavor,
+        goalsOwn: mh.goalsOwn + awayTeamInfo.goalsOwn,
+        goalsBalance: mh.goalsBalance + awayTeamInfo.goalsBalance,
+        efficiency,
+      };
+    });
+  }
+
+  async getInfoGeneral() {
+    const home = await this.getInfo('homeTeamId');
+    const away = await this.getInfo('awayTeamId');
+    const geral = await this.generateAllInfo({ home, away });
+    const result = LeaderboardService.compareTimes(geral);
     return result;
   }
 }

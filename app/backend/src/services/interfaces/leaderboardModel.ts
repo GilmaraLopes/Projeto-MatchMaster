@@ -12,5 +12,6 @@ export interface ILeaderboard {
 }
 
 export default interface IGetLeader{
+  getInfoGeneral(): unknown;
   getInfo(team: string): Promise<ILeaderboard[]>
 }

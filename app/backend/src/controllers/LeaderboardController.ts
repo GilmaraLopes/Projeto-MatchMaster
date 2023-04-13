@@ -23,4 +23,13 @@ export default class LeaderboardController {
       next(error);
     }
   }
+
+  async getInfoBoard(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
+    try {
+      const getInfoAll = await this.leaderboardService.getInfoGeneral();
+      return res.status(200).json(getInfoAll);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
