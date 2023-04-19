@@ -44,3 +44,23 @@ Vão ser necessárias para realização do projeto
 ## Requisitos Bônus
  - 22 - (Bônus; TDD) Desenvolva testes que cubram no mínimo 80 por cento dos arquivos no diretório /app/backend/src, com um mínimo de 100 linhas cobertas
  - 30 - (Bônus) Desenvolva o endpoint /leaderboard de forma que seja possível filtrar a classificação geral dos times na tela de classificação do front-end e atualizar a tabela ao inserir a partida Flamengo 3 X 0 Napoli-SC
+ 
+## Instruções
+## Como rodar o projeto utilizando a maquina local
+
+Primeiro faça o clone deste repositório em sua maquina.
+
+Após o clone ser concluído com sucesso, entre no diretório e utilize o comando npm install.
+
+Utilize npm run dev para iniciar o servidor do projeto localmente.
+
+## Como rodar o projeto utilizando Docker
+
+Primeiro faça o clone deste repositório em sua maquina.
+
+Após o clone ser concluído com sucesso, entre no diretório e utilize o comando npm run compose: up :dev.
+
+O Frontend e o Backend serão iniciados automaticamente nas respectivas portas 3000 e 3001.
+
+## Informações adicionais
+Desenvolvido com Node 16.
